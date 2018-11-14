@@ -1,0 +1,46 @@
+server:
+  port: 8075
+spring:
+  application:
+    name: dongjia-store                                             # 项⽬名称尽量⽤⼩写
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  messages:
+    encoding: UTF-8
+  devtools:
+    remote:
+      restart:
+        enabled: true
+#Eureka配置
+eureka:8881
+    client:
+      serviceUrl:
+#        defaultZone: http://admin:admin@test-eureka-server-1.dongjia168.com:8761/eureka/,http://admin:admin@test-eureka-server-2.dongjia168.com:8762/eureka/
+        defaultZone: http://admin:admin@eurekab.dongjia168.com/eureka/
+    instance:
+      preferIpAddress: true                                                         #访问的路径变为IP地址
+feign:
+  hystrix:
+    enabled: true                                                                     #开启hystrix
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream                                                       #http://host:port/actuator/hystrix.stream访问监控数据
+hystrix:
+  shareSecurityContext: true
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 100000
+        forceClosed: true
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000        #hystrix超时时间
+ribbon:
+  ReadTimeout: 60000                          #ribbon超时时间
+  ConnectTimeout: 60000
